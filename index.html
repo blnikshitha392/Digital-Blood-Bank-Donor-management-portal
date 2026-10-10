@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BloodLink - Digital Blood Bank</title>
+
+ <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f6fa;
+    color: #222;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* ===== MIDNIGHT MEDICAL LOGIN THEME ===== */
+
+#loginPage {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(225, 35, 70, 0.17), transparent 35%),
+        linear-gradient(135deg, #071321, #10263f 60%, #152f4d);
+    color: #f8fafc;
+}
+
+.login-brand {
+    flex: 1 1 58%;
+    min-height: 100vh;
+    padding: clamp(35px, 7vw, 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-brand::before {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    right: -100px;
+    top: 10%;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 40px rgba(255,255,255,.025),
+        0 0 0 80px rgba(255,255,255,.02);
+    pointer-events: none;
+}
+
+.brand-kicker {
+    width: fit-content;
+    padding: 10px 16px;
+    margin-bottom: 28px;
+    border: 1px solid rgba(255,100,125,.3);
+    border-radius: 30px;
+    background: rgba(220,38,65,.12);
+    color: #ffb8c2;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.brand-logo-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.brand-drop {
+    width: 65px;
+    height: 65px;
+    display: grid;
+    place-items: center;
+    border-radius: 20px;
+    font-size: 34px;
+    background: linear-gradient(145deg, #ff4d6d, #bd1233);
+    box-shadow: 0 12px 35px rgba(220,38,65,.3);
+}
+
+.login-brand h1 {
+    color: white;
+    font-size: clamp(42px, 5vw, 68px);
+    letter-spacing: -2px;
+}
+
+.login-brand h1 span {
+    color: #ff536f;
+}
+
+.brand-tagline {
+    max-width: 520px;
+    margin-bottom: 20px;
+    color: white;
+    font-size: clamp(23px, 2.5vw, 32px);
+    line-height: 1.4;
+    font-weight: bold;
+    position: relative;
+}
+
+.brand-description {
+    max-width: 500px;
+    color: #b9c8d8;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.brand-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.brand-feature {
+    padding: 12px 15px;
+    color: #dce8f4;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    font-size: 13px;
+}
+
+/* Login form side */
+
+.login-form-side {
+    flex: 0 0 min(42%, 560px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: rgba(4,13,24,.4);
+    border-left: 1px solid rgba(255,255,255,.08);
+}
+
+.login-box {
+    width: 100%;
+    max-width: 390px;
+    padding: 40px;
+    border-radius: 24px;
+    color: #f8fafc;
+    background: linear-gradient(145deg, #172b41, #0c1c2e);
+    border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 28px 80px rgba(0,0,0,.35);
+}
+
+.login-form-heading {
+    margin-bottom: 10px;
+    color: white;
+    font-size: 28px;
+}
+
+.login-form-subtitle {
+    margin-bottom: 28px;
+    color: #aebfd1;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.login-box label {
+    display: block;
+    margin: 17px 0 8px;
+    color: #dce7f2;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 15px;
+    color: white;
+    background: #0b1b2c;
+    border: 1px solid #2d4359;
+    border-radius: 10px;
+    outline: none;
+    transition: .2s;
+}
+
+.login-box input::placeholder {
+    color: #7f93a8;
+}
+
+.login-box input:focus {
+    border-color: #ff536f;
+    box-shadow: 0 0 0 3px rgba(255,83,111,.13);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 25px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(100deg, #d7193f, #f04462);
+    box-shadow: 0 10px 24px rgba(220,38,65,.23);
+    transition: .2s;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(220,38,65,.32);
+}
+
+.login-security-note {
+    margin-top: 22px;
+    color: #8296aa;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Main application remains hidden until login */
+
+#app {
+    display: none;
+}
+
+/* Responsive layout */
+
+@media (max-width: 850px) {
+    #loginPage {
+        flex-direction: column;
+    }
+
+    .login-brand {
+        min-height: auto;
+        padding: 45px 28px 30px;
+    }
+
+    .login-brand h1 {
+        font-size: 43px;
+    }
+
+    .brand-tagline {
+        font-size: 24px;
+    }
+
+    .brand-description {
+        font-size: 14px;
+    }
+
+    .brand-features {
+        margin-top: 20px;
+    }
+
+    .login-form-side {
+        flex: 1 1 auto;
+        width: 100%;
+        padding: 25px;
+        border-left: none;
+        border-top: 1px solid rgba(255,255,255,.08);
+    }
+
+    .login-box {
+        padding: 30px;
+    }
+}
+
+#app {
+    display: none;
+}
+
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+   /* background: #191c24;*/
+   background: #102a43;
+    color: white;
+    padding: 25px 15px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar button {
+    width: 100%;
+    padding: 13px;
+    margin: 5px 0;
+    border: none;
+    background: transparent;
+    color: #ddd;
+    text-align: left;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+    background: #b31217;
+    color: white;
+}
+
+.logout {
+    position: absolute;
+    bottom: 20px;
+    left: 15px;
+    width: calc(100% - 30px) !important;
+}
+
+.content {
+    margin-left: 240px;
+    padding: 30px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    color: #333;
+}
+
+.admin {
+    background: white;
+    padding: 10px 18px;
+    border-radius: 20px;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    color: #777;
+    font-size: 14px;
+}
+
+.card h2 {
+    margin-top: 10px;
+    color: #b31217;
+    font-size: 28px;
+}
+
+.panel {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+}
+
+.panel h2 {
+    margin-bottom: 20px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-grid input,
+.form-grid select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.primary-btn {
+    background: #b31217;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+}
+
+.primary-btn:hover {
+    background: #8e0e00;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 13px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+}
+
+th {
+    color: #777;
+    font-size: 13px;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.safe {
+    background: #dff5e5;
+    color: green;
+}
+
+.pending {
+    background: #fff1c7;
+    color: #9b7200;
+}
+
+.danger {
+    background: #ffdfe2;
+    color: #b31217;
+}
+
+.blood-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.blood-card {
+    padding: 20px;
+    border-radius: 12px;
+    background: #fff1f2;
+    text-align: center;
+}
+
+.blood-card h2 {
+    color: #b31217;
+}
+
+.ai-card {
+    /*background: linear-gradient(135deg, #6a11cb, #2575fc);*/
+    color: white;
+    padding: 25px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #102a43, #1d4e73);
+}
+
+.ai-card h2 {
+    margin-bottom: 10px;
+}
+
+.ai-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.ai-form select,
+.ai-form input {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.ai-button {
+    background: white;
+    color: #5d20c4;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.ai-button:hover {
+    background: #f0f0f0;
+}
+
+.prediction-result {
+    margin-top: 20px;
+    padding: 18px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+}
+
+.prediction-result h3 {
+    margin-bottom: 10px;
+}
+
+.notification {
+    background: white;
+    padding: 18px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border-left: 5px solid #b31217;
+}
+
+.notification strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.notification small {
+    display: block;
+    margin-top: 8px;
+    color: #777;
+}
+
+.loading {
+    color: #777;
+    padding: 15px;
+}
+
+.error-message {
+    color: #b31217;
+    padding: 15px;
+}
+
+@media(max-width:900px) {
+
+    .sidebar {
+        width: 190px;
+    }
+
+    .content {
+        margin-left: 190px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .blood-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ai-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media(max-width:600px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .logout {
+        position: static;
+        margin-top: 10px !important;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .cards,
+    .blood-grid,
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .login-box {
+        width: 90%;
+        padding: 30px;
+    }
+}
+</style> 
+
+
+</head>
+
+<body>
+
+
+<!-- LOGIN PAGE -->
+
+<div id="loginPage">
+
+    <section class="login-brand">
+        <div class="brand-kicker">🩺 Digital Blood Bank Platform</div>
+
+        <div class="brand-logo-row">
+            <div class="brand-drop">🩸</div>
+            <h1>Blood<span>Link</span></h1>
+        </div>
+
+        <p class="brand-tagline">
+            Every Drop Matters.<br>
+            Every Donor Counts.
+        </p>
+
+        <p class="brand-description">
+            A smarter way to manage donors, monitor blood inventory,
+            track hospital requests and forecast blood demand.
+        </p>
+
+        <div class="brand-features">
+            <div class="brand-feature">♡ Donor Management</div>
+            <div class="brand-feature">🩸 Blood Inventory</div>
+            <div class="brand-feature">✦ AI Demand Forecasting</div>
+        </div>
+    </section>
+
+    <section class="login-form-side">
+        <div class="login-box">
+
+            <h2 class="login-form-heading">Welcome back</h2>
+
+            <p class="login-form-subtitle">
+                Sign in to access your BloodLink dashboard.
+            </p>
+
+            <form onsubmit="event.preventDefault(); login();">
+
+                <label for="email">Email address</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="admin@example.com"
+                    autocomplete="username"
+                    required
+                >
+
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button type="submit" class="login-btn">
+                    Sign in to BloodLink →
+                </button>
+
+            </form>
+
+            <p class="login-security-note">
+                🔒 Secure access for authorized administrators
+            </p>
+
+        </div>
+    </section>
+
+</div>
+
+<!-- MAIN APPLICATION -->
+
+<div id="app">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <h2>🩸 BloodLink</h2>
+
+        <button
+            class="active"
+            onclick="showSection('dashboard', this)"
+        >
+            📊 Dashboard
+        </button>
+
+        <button
+            onclick="showSection('donors', this)"
+        >
+            👤 Donor Management
+        </button>
+
+        <button
+            onclick="showSection('screening', this)"
+        >
+            🧪 Blood Screening
+        </button>
+
+        <button
+            onclick="showSection('inventory', this)"
+        >
+            🩸 Blood Inventory
+        </button>
+
+        <button
+            onclick="showSection('requests', this)"
+        >
+            📋 Blood Requests
+        </button>
+
+        <button
+            onclick="showSection('notifications', this)"
+        >
+            🔔 Notifications
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            🚪 Logout
+        </button>
+
+    </div>
+
+
+    <!-- CONTENT -->
+
+    <div class="content">
+
+        <div class="header">
+
+            <div>
+                <h1 id="pageTitle">
+                    Admin Dashboard
+                </h1>
+
+                <p>
+                    Digital Blood Bank Management System
+                </p>
+            </div>
+
+            <div class="admin">
+                👤 Admin
+            </div>
+
+        </div>
+
+
+        <!-- DASHBOARD -->
+
+        <section
+            id="dashboard"
+            class="section active"
+        >
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Total Donors</h3>
+                    <h2 id="donorCount">0</h2>
+                </div>
+
+                <div class="card">
+                    <h3>Blood Units</h3>
+                    <h2 id="unitCount">0</h2>
+                </div>
+
+                <div class="card">
+                    <h3>Pending Requests</h3>
+                    <h2 id="requestCount">0</h2>
+                </div>
+
+                <div class="card">
+                    <h3>Notifications</h3>
+                    <h2 id="notificationCount">0</h2>
+                </div>
+
+            </div>
+
+
+            <!-- BLOOD STOCK -->
+
+            <div class="panel">
+
+                <h2>Blood Inventory Overview</h2>
+
+                <div
+                    class="blood-grid"
+                    id="bloodOverview"
+                >
+
+                    <div class="blood-card">
+                        <h2>O+</h2>
+                        <p>0 Units</p>
+                    </div>
+
+                    <div class="blood-card">
+                        <h2>A+</h2>
+                        <p>0 Units</p>
+                    </div>
+
+                    <div class="blood-card">
+                        <h2>B+</h2>
+                        <p>0 Units</p>
+                    </div>
+
+                    <div class="blood-card">
+                        <h2>AB+</h2>
+                        <p>0 Units</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI DEMAND PREDICTION -->
+
+            <div class="ai-card">
+
+                <h2>🤖 AI / ML Blood Demand Prediction</h2>
+
+                <p>
+                    Predict expected blood demand using
+                    the trained machine learning model.
+                </p>
+
+                <div class="ai-form">
+
+                    <select id="predictionBloodGroup">
+
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+
+                    </select>
+
+                    <input
+                        type="date"
+                        id="predictionDate"
+                    >
+
+                    <button
+                        class="ai-button"
+                        type="button"
+                        onclick="predictDemand()"
+                    >
+                        🤖 Predict Demand
+                    </button>
+
+                </div>
+
+                <div
+                    id="predictionResult"
+                    class="prediction-result"
+                >
+                    <p>
+                        Select a blood group and date,
+                        then click Predict Demand.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DONORS -->
+
+        <section
+            id="donors"
+            class="section"
+        >
+
+            <div class="panel">
+
+                <h2>👤 Donor Registration</h2>
+
+                <form
+                    class="form-grid"
+                    onsubmit="addDonor(event)"
+                >
+
+                    <input
+                        id="donorName"
+                        placeholder="Full Name"
+                        required
+                    >
+
+                    <input
+                        id="donorPhone"
+                        placeholder="Phone Number"
+                        required
+                    >
+
+                    <input
+                        id="donorEmail"
+                        type="email"
+                        placeholder="Email"
+                        required
+                    >
+
+                    <select
+                        id="donorBlood"
+                        required
+                    >
+
+                        <option value="">
+                            Blood Group
+                        </option>
+
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+
+                    </select>
+
+                    <input
+                        id="donorAge"
+                        type="number"
+                        placeholder="Age"
+                        min="1"
+                        required
+                    >
+
+                    <input
+                        id="donorCity"
+                        placeholder="City"
+                        required
+                    >
+
+                    <button
+                        class="primary-btn"
+                        type="submit"
+                    >
+                        Add Donor
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>Registered Donors</h2>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Blood</th>
+                            <th>Age</th>
+                            <th>City</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="donorTable">
+
+                        <tr>
+                            <td colspan="6">
+                                Loading donors...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- SCREENING -->
+
+        <section
+            id="screening"
+            class="section"
+        >
+
+            <div class="panel">
+
+                <h2>🧪 Blood Screening Records</h2>
+
+                <form
+                    class="form-grid"
+                    onsubmit="addScreening(event)"
+                >
+
+                    <input
+                        id="screenDonor"
+                        placeholder="Donor ID"
+                        required
+                    >
+
+                    <select id="hiv">
+                        <option>Negative</option>
+                        <option>Positive</option>
+                    </select>
+
+                    <select id="hepatitis">
+                        <option>Negative</option>
+                        <option>Positive</option>
+                    </select>
+
+                    <select id="malaria">
+                        <option>Negative</option>
+                        <option>Positive</option>
+                    </select>
+
+                    <select id="screenStatus">
+                        <option>Safe</option>
+                        <option>Unsafe</option>
+                        <option>Pending</option>
+                    </select>
+
+                    <button
+                        class="primary-btn"
+                        type="submit"
+                    >
+                        Save Screening
+                    </button>
+
+                </form>
+
+                <p style="margin-top:15px;color:#777;">
+                    Note: The system stores screening results.
+                    Laboratory testing is performed externally.
+                </p>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>Screening History</h2>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Donor ID</th>
+                            <th>HIV</th>
+                            <th>Hepatitis</th>
+                            <th>Malaria</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="screeningTable">
+
+                        <tr>
+                            <td colspan="5">
+                                Loading screening records...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- INVENTORY -->
+
+        <section
+            id="inventory"
+            class="section"
+        >
+
+            <div class="panel">
+
+                <h2>🩸 Add Blood Inventory</h2>
+
+                <form
+                    class="form-grid"
+                    onsubmit="addInventory(event)"
+                >
+
+                    <select
+                        id="inventoryBlood"
+                        required
+                    >
+
+                        <option value="">
+                            Blood Group
+                        </option>
+
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+
+                    </select>
+
+                    <input
+                        id="inventoryQty"
+                        type="number"
+                        min="1"
+                        placeholder="Quantity"
+                        required
+                    >
+
+                    <input
+                        id="inventoryLocation"
+                        placeholder="Blood Bank Location"
+                        required
+                    >
+
+                    <input
+                        id="inventoryExpiry"
+                        type="date"
+                        required
+                    >
+
+                    <button
+                        class="primary-btn"
+                        type="submit"
+                    >
+                        Add Units
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>Current Blood Inventory</h2>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Blood Group</th>
+                            <th>Quantity</th>
+                            <th>Location</th>
+                            <th>Expiry</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="inventoryTable">
+
+                        <tr>
+                            <td colspan="6">
+                                Loading inventory...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- REQUESTS -->
+
+        <section
+            id="requests"
+            class="section"
+        >
+
+            <div class="panel">
+
+                <h2>📋 Create Blood Request</h2>
+
+                <form
+                    class="form-grid"
+                    onsubmit="addRequest(event)"
+                >
+
+                    <input
+                        type="text"
+                        id="hospital"
+                        placeholder="Hospital Name"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        id="contactNumber"
+                        placeholder="Contact Number"
+                        required
+                    >
+
+                    <select
+                        id="requestBlood"
+                        required
+                    >
+
+                        <option value="">
+                            Blood Group
+                        </option>
+
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+
+                    </select>
+
+                    <input
+                        id="requestQty"
+                        type="number"
+                        min="1"
+                        placeholder="Units Required"
+                        required
+                    >
+
+                    <select id="urgency">
+
+                        <option>Normal</option>
+                        <option>Urgent</option>
+                        <option>Emergency</option>
+
+                    </select>
+
+                    <button
+                        class="primary-btn"
+                        type="submit"
+                    >
+                        Submit Request
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>Blood Request Tracking</h2>
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Hospital</th>
+                            <th>Blood</th>
+                            <th>Units</th>
+                            <th>Urgency</th>
+                            <th>Status</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="requestTable">
+
+                        <tr>
+                            <td colspan="6">
+                                Loading requests...
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <section
+            id="notifications"
+            class="section"
+        >
+
+            <div class="panel">
+
+                <h2>🔔 Notifications</h2>
+
+                <div id="notificationList">
+
+                    <div class="notification">
+                        Loading notifications...
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   BACKEND URL
+===================================================== */
+
+const API_BASE = "http://localhost:5000/api";
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function login() {
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const emailPattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!email || !password) {
+        alert("Please enter email and password.");
+        return;
+    }
+
+    if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address.");
+        return;
+    }
+
+    if (password.length < 4) {
+        alert("Password must contain at least 4 characters.");
+        return;
+    }
+
+    document.getElementById("loginPage").style.display = "none";
+
+    document.getElementById("app").style.display = "block";
+
+    loadAllData();
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    document.getElementById("app").style.display = "none";
+
+    document.getElementById("loginPage").style.display = "flex";
+
+    document.getElementById("email").value = "";
+
+    document.getElementById("password").value = "";
+}
+
+
+/* =====================================================
+   SECTION NAVIGATION
+===================================================== */
+
+function showSection(sectionId, button) {
+
+    const sections =
+        document.querySelectorAll(".section");
+
+    sections.forEach(function(section) {
+        section.classList.remove("active");
+    });
+
+    const selectedSection =
+        document.getElementById(sectionId);
+
+    if (selectedSection) {
+        selectedSection.classList.add("active");
+    }
+
+    const buttons =
+        document.querySelectorAll(".sidebar button");
+
+    buttons.forEach(function(btn) {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    const titles = {
+
+        dashboard: "Admin Dashboard",
+
+        donors: "Donor Management",
+
+        screening: "Blood Screening",
+
+        inventory: "Blood Inventory",
+
+        requests: "Blood Requests",
+
+        notifications: "Notifications"
+
+    };
+
+    document.getElementById("pageTitle").innerText =
+        titles[sectionId] || "BloodLink";
+
+}
+
+
+/* =====================================================
+   ADD DONOR
+===================================================== */
+
+
+async function addDonor(event) {
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("donorName").value.trim();
+
+    const phone =
+        document.getElementById("donorPhone").value.trim();
+
+    const email =
+        document.getElementById("donorEmail").value.trim();
+
+    const bloodGroup =
+        document.getElementById("donorBlood").value;
+
+    const age =
+        document.getElementById("donorAge").value;
+
+    const city =
+        document.getElementById("donorCity").value.trim();
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/donors`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    bloodGroup: bloodGroup,
+                    age: age,
+                    city: city
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message || "Failed to add donor"
+            );
+        }
+
+        alert(
+            "Donor saved to PostgreSQL successfully!"
+        );
+
+        event.target.reset();
+
+        // Refresh EVERYTHING including dashboard
+        await loadAllData();
+
+        // Go back to dashboard
+        
+showSection("dashboard", document.querySelector('.sidebar button[onclick*="dashboard"]'));
+
+
+    } catch (error) {
+
+        console.error(
+            "Donor error:",
+            error
+        );
+
+        alert(
+            "Error: " + error.message
+        );
+    }
+}
+
+/* =====================================================
+   LOAD DONORS
+===================================================== */
+
+async function loadDonors() {
+    try {
+        const response = await fetch(`${API_BASE}/donors`);
+
+        if (!response.ok) {
+            throw new Error("Failed to load donors");
+        }
+
+        const result = await response.json();
+
+        // Supports both:
+        // [ {...}, {...} ]
+        // and
+        // { donors: [ {...}, {...} ] }
+        const donors = Array.isArray(result)
+            ? result
+            : (result.donors || result.data || []);
+
+        const table = document.getElementById("donorTable");
+
+        table.innerHTML = "";
+
+        if (donors.length === 0) {
+            table.innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        No donors found in PostgreSQL.
+                    </td>
+                </tr>
+            `;
+
+            document.getElementById("donorCount").innerText = "0";
+            return;
+        }
+
+        donors.forEach(donor => {
+
+            const row = table.insertRow();
+
+            row.innerHTML = `
+                <td>${escapeHTML(donor.donor_id)}</td>
+                <td>${escapeHTML(donor.name)}</td>
+                <td>${escapeHTML(donor.phone)}</td>
+                <td>${escapeHTML(donor.blood_group)}</td>
+                <td>${escapeHTML(donor.age)}</td>
+                <td>${escapeHTML(donor.city)}</td>
+            `;
+        });
+
+        // Dashboard donor count
+        document.getElementById("donorCount").innerText =
+            donors.length;
+
+    } catch (error) {
+
+        console.error("Error loading donors:", error);
+
+        document.getElementById("donorTable").innerHTML = `
+            <tr>
+                <td colspan="6">
+                    Error loading donors.
+                </td>
+            </tr>
+        `;
+
+        document.getElementById("donorCount").innerText = "0";
+    }
+}
+
+
+/* =====================================================
+   ADD SCREENING
+===================================================== */
+
+async function addScreening(event) {
+
+    event.preventDefault();
+
+    const donorId =
+        document.getElementById("screenDonor").value;
+
+    const hivResult =
+        document.getElementById("hiv").value;
+
+    const hepatitisResult =
+        document.getElementById("hepatitis").value;
+
+    const malariaResult =
+        document.getElementById("malaria").value;
+
+    const screeningStatus =
+        document.getElementById("screenStatus").value;
+
+    try {
+
+        const response = await fetch(
+            `${API_BASE}/screening`,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    donorId,
+                    hivResult,
+                    hepatitisResult,
+                    malariaResult,
+                    screeningStatus
+                })
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.message ||
+                "Failed to save screening"
+            );
+        }
+
+        alert(
+            "Screening record saved to PostgreSQL successfully!"
+        );
+
+        event.target.reset();
+
+        await loadScreening();
+
+    } catch (error) {
+
+        console.error(
+            "Screening error:",
+            error
+        );
+
+        alert(
+            "Error: " + error.message
+        );
+    }
+}
+
+
+/* =====================================================
+   LOAD SCREENING
+===================================================== */
+
+async function loadScreening() {
+
+    try {
+
+        const response =
+            await fetch(`${API_BASE}/screening`);
+
+        if (!response.ok) {
+            throw new Error(
+                "Failed to load screening records"
+            );
+        }
+
+        const screenings =
+            await response.json();
+
+        const table =
+            document.getElementById("screeningTable");
+
+        table.innerHTML = "";
+
+        if (
+            !Array.isArray(screenings) ||
+            screenings.length === 0
+        ) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="5">
+                        No screening records found.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        screenings.forEach(screening => {
+
+            const row =
+                table.insertRow();
+
+            let statusClass = "danger";
+
+            if (
+                screening.screening_status === "Safe"
+            ) {
+                statusClass = "safe";
+            }
+
+            if (
+                screening.screening_status === "Pending"
+            ) {
+                statusClass = "pending";
+            }
+
+            row.innerHTML = `
+                <td>${escapeHTML(screening.donor_id)}</td>
+                <td>${escapeHTML(screening.hiv_result)}</td>
+                <td>${escapeHTML(screening.hepatitis_result)}</td>
+                <td>${escapeHTML(screening.malaria_result)}</td>
+                <td>
+                    <span class="status ${statusClass}">
+                        ${escapeHTML(screening.screening_status)}
+                    </span>
+                </td>
+            `;
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Error loading screening:",
+            error
+        );
+
+        document.getElementById("screeningTable").innerHTML = `
+            <tr>
+                <td colspan="5" class="error-message">
+                    Unable to load screening records.
+                </td>
+            </tr>
+        `;
+    }
+}
+
+
+/* =====================================================
+   ADD INVENTORY
+===================================================== */
+
+async function addInventory(event) {
+
+    event.preventDefault();
+
+    const bloodGroup =
+        document.getElementById("inventoryBlood").value;
+
+    const quantity =
+        document.getElementById("inventoryQty").value;
+
+    const bloodBank =
+        document.getElementById("inventoryLocation").value.trim();
+
+    const expiryDate =
+        document.getElementById("inventoryExpiry").value;
+
+    try {
+
+        const response =
+            await fetch(`${API_BASE}/inventory`, {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    bloodGroup,
+                    quantity,
+                    bloodBank,
+                    expiryDate
+                })
+
+            });
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Failed to add inventory"
+            );
+        }
+
+        alert(
+            "Blood inventory saved to PostgreSQL successfully!"
+        );
+
+        event.target.reset();
+
+        await loadInventory();
+
+    } catch (error) {
+
+        console.error(
+            "Inventory error:",
+            error
+        );
+
+        alert(
+            "Error: " + error.message
+        );
+    }
+}
+
+
+/* =====================================================
+   LOAD INVENTORY
+===================================================== */
+
+async function loadInventory() {
+
+    try {
+
+        const response =
+            await fetch(`${API_BASE}/inventory`);
+
+        if (!response.ok) {
+            throw new Error(
+                "Failed to load inventory"
+            );
+        }
+
+        const inventory =
+            await response.json();
+
+        const table =
+            document.getElementById("inventoryTable");
+
+        table.innerHTML = "";
+
+        if (
+            !Array.isArray(inventory) ||
+            inventory.length === 0
+        ) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        No inventory records found.
+                    </td>
+                </tr>
+            `;
+
+            updateBloodOverview([]);
+
+            return;
+        }
+
+        inventory.forEach(item => {
+
+            const row =
+                table.insertRow();
+
+            const status =
+                item.safety_status || "Safe";
+
+            const statusClass =
+                status === "Safe"
+                ? "safe"
+                : "danger";
+
+            row.innerHTML = `
+                <td>${escapeHTML(item.inventory_id)}</td>
+                <td>${escapeHTML(item.blood_group)}</td>
+                <td>${escapeHTML(item.quantity)}</td>
+                <td>${escapeHTML(item.blood_bank)}</td>
+                <td>${escapeHTML(formatDate(item.expiry_date))}</td>
+                <td>
+                    <span class="status ${statusClass}">
+                        ${escapeHTML(status)}
+                    </span>
+                </td>
+            `;
+
+        });
+
+        updateBloodOverview(inventory);
+
+        let totalUnits = 0;
+
+        inventory.forEach(item => {
+
+            totalUnits +=
+                Number(item.quantity) || 0;
+
+        });
+
+        document.getElementById("unitCount").innerText =
+            totalUnits;
+
+    } catch (error) {
+
+        console.error(
+            "Error loading inventory:",
+            error
+        );
+
+        document.getElementById("inventoryTable").innerHTML = `
+            <tr>
+                <td colspan="6" class="error-message">
+                    Unable to load inventory. Check backend.
+                </td>
+            </tr>
+        `;
+    }
+}
+
+
+/* =====================================================
+   BLOOD INVENTORY OVERVIEW
+===================================================== */
+
+function updateBloodOverview(inventory) {
+
+    const groups =
+        ["O+", "A+", "B+", "AB+"];
+
+    const totals = {};
+
+    groups.forEach(group => {
+        totals[group] = 0;
+    });
+
+    inventory.forEach(item => {
+
+        const group =
+            item.blood_group;
+
+        if (totals.hasOwnProperty(group)) {
+
+            totals[group] +=
+                Number(item.quantity) || 0;
+        }
+    });
+
+    const container =
+        document.getElementById("bloodOverview");
+
+    container.innerHTML = "";
+
+    groups.forEach(group => {
+
+        container.innerHTML += `
+            <div class="blood-card">
+                <h2>${group}</h2>
+                <p>${totals[group]} Units</p>
+            </div>
+        `;
+
+    });
+}
+
+
+/* =====================================================
+   ADD BLOOD REQUEST
+===================================================== */
+
+async function addRequest(event) {
+
+    event.preventDefault();
+
+    const hospitalName =
+        document.getElementById("hospital").value.trim();
+
+    const contactNumber =
+        document.getElementById("contactNumber").value.trim();
+
+    const bloodGroup =
+        document.getElementById("requestBlood").value;
+
+    const quantityRequired =
+        document.getElementById("requestQty").value;
+
+    const urgency =
+        document.getElementById("urgency").value;
+
+    try {
+
+        const response =
+            await fetch(`${API_BASE}/requests`, {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    hospitalName,
+
+                    contactNumber,
+
+                    bloodGroup,
+
+                    quantityRequired,
+
+                    urgency
+
+                })
+
+            });
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Failed to add request"
+            );
+        }
+
+        alert(
+            "Blood request saved to PostgreSQL successfully!"
+        );
+
+        event.target.reset();
+
+        await loadRequests();
+
+    } catch (error) {
+
+        console.error(
+            "Request error:",
+            error
+        );
+
+        alert(
+            "Error: " + error.message
+        );
+    }
+}
+
+
+/* =====================================================
+   LOAD BLOOD REQUESTS
+===================================================== */
+
+async function loadRequests() {
+
+    try {
+
+        const response =
+            await fetch(`${API_BASE}/requests`);
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load requests"
+            );
+        }
+
+        const requests =
+            await response.json();
+
+        const table =
+            document.getElementById("requestTable");
+
+        table.innerHTML = "";
+
+        if (
+            !Array.isArray(requests) ||
+            requests.length === 0
+        ) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        No blood requests found.
+                    </td>
+                </tr>
+            `;
+
+            document.getElementById(
+                "requestCount"
+            ).innerText = "0";
+
+            return;
+        }
+
+        let pendingCount = 0;
+
+        requests.forEach(request => {
+
+            const row =
+                table.insertRow();
+
+            const status =
+                request.status || "Pending";
+
+            if (
+                status.toLowerCase() === "pending"
+            ) {
+                pendingCount++;
+            }
+
+            let statusClass = "pending";
+
+            if (
+                status.toLowerCase() === "approved" ||
+                status.toLowerCase() === "fulfilled" ||
+                status.toLowerCase() === "completed"
+            ) {
+                statusClass = "safe";
+            }
+
+            row.innerHTML = `
+                <td>#${escapeHTML(request.request_id)}</td>
+                <td>${escapeHTML(request.hospital_name)}</td>
+                <td>${escapeHTML(request.blood_group)}</td>
+                <td>${escapeHTML(request.quantity_required)}</td>
+                <td>${escapeHTML(request.urgency)}</td>
+                <td>
+                    <span class="status ${statusClass}">
+                        ${escapeHTML(status)}
+                    </span>
+                </td>
+            `;
+
+        });
+
+        document.getElementById(
+            "requestCount"
+        ).innerText = pendingCount;
+
+    } catch (error) {
+
+        console.error(
+            "Error loading requests:",
+            error
+        );
+
+        document.getElementById("requestTable").innerHTML = `
+            <tr>
+                <td colspan="6" class="error-message">
+                    Unable to load requests. Check backend.
+                </td>
+            </tr>
+        `;
+    }
+}
+
+
+/* =====================================================
+   LOAD NOTIFICATIONS
+===================================================== */
+
+async function loadNotifications() {
+    try {
+        const response =
+            await fetch(`${API_BASE}/notifications`);
+
+        if (!response.ok) {
+            throw new Error("Failed to load notifications");
+        }
+
+        const result = await response.json();
+
+        console.log("Notifications from backend:", result);
+
+        // Supports both:
+        // [ {...}, {...} ]
+        // and
+        // { notifications: [ {...}, {...} ] }
+        const notifications = Array.isArray(result)
+            ? result
+            : (result.notifications || result.data || []);
+
+        const container =
+            document.getElementById("notificationList");
+
+        container.innerHTML = "";
+
+        if (notifications.length === 0) {
+
+            container.innerHTML = `
+                <div class="notification">
+                    <strong>No notifications</strong>
+                    <p>
+                        There are currently no notifications
+                        available from the backend.
+                    </p>
+                </div>
+            `;
+
+            document.getElementById(
+                "notificationCount"
+            ).innerText = "0";
+
+            return;
+        }
+
+        notifications.forEach(notification => {
+
+            const item =
+                document.createElement("div");
+
+            item.className = "notification";
+
+            item.innerHTML = `
+                <strong>
+                    ${escapeHTML(
+                        notification.title ||
+                        "Notification"
+                    )}
+                </strong>
+
+                <p>
+                    ${escapeHTML(
+                        notification.message ||
+                        ""
+                    )}
+                </p>
+
+                <small>
+                    ${escapeHTML(
+                        notification.notification_type ||
+                        notification.type ||
+                        ""
+                    )}
+                </small>
+            `;
+
+            container.appendChild(item);
+        });
+
+        document.getElementById(
+            "notificationCount"
+        ).innerText = notifications.length;
+
+    } catch (error) {
+
+        console.error(
+            "Error loading notifications:",
+            error
+        );
+
+        document.getElementById(
+            "notificationList"
+        ).innerHTML = `
+            <div class="notification">
+                <strong>⚠️ Unable to load notifications</strong>
+                <p>
+                    Please make sure the backend is running.
+                </p>
+            </div>
+        `;
+
+        document.getElementById(
+            "notificationCount"
+        ).innerText = "0";
+    }
+}
+
+
+/* =====================================================
+   AI / ML BLOOD DEMAND PREDICTION
+===================================================== */
+
+async function predictDemand() {
+
+    const bloodGroup =
+        document.getElementById(
+            "predictionBloodGroup"
+        ).value;
+
+    const date =
+        document.getElementById(
+            "predictionDate"
+        ).value;
+
+    const resultBox =
+        document.getElementById(
+            "predictionResult"
+        );
+
+    if (!date) {
+
+        resultBox.innerHTML = `
+            <strong>
+                ⚠️ Please select a prediction date.
+            </strong>
+        `;
+
+        return;
+    }
+
+    resultBox.innerHTML = `
+        <p>⏳ Predicting blood demand...</p>
+    `;
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE}/predict-demand`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        blood_group: bloodGroup,
+                        date: date
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Prediction failed"
+            );
+        }
+
+        const predictedDemand =
+            data.predicted_demand ??
+            data.prediction ??
+            data.demand ??
+            data.predictedDemand;
+
+        resultBox.innerHTML = `
+            <h3>🤖 Prediction Result</h3>
+
+            <p>
+                Blood Group:
+                <strong>
+                    ${escapeHTML(
+                        data.blood_group || bloodGroup
+                    )}
+                </strong>
+            </p>
+
+            <p>
+                Prediction Date:
+                <strong>
+                    ${escapeHTML(
+                        data.date || date
+                    )}
+                </strong>
+            </p>
+
+            <p>
+                Expected Demand:
+                <strong>
+                    ${
+                        predictedDemand !== undefined
+                        ? escapeHTML(predictedDemand)
+                        : "Prediction received"
+                    }
+                    ${
+                        predictedDemand !== undefined
+                        ? " units"
+                        : ""
+                    }
+                </strong>
+            </p>
+        `;
+
+    } catch (error) {
+
+        console.error(
+            "Prediction error:",
+            error
+        );
+
+        resultBox.innerHTML = `
+            <h3>❌ Prediction Error</h3>
+
+            <p>
+                ${escapeHTML(error.message)}
+            </p>
+
+            <p style="margin-top:8px;">
+                Make sure both the Node.js backend
+                and Python ML server are running.
+            </p>
+        `;
+    }
+}
+
+
+/* =====================================================
+   LOAD EVERYTHING
+===================================================== */
+
+async function loadAllData() {
+
+    await Promise.allSettled([
+
+        loadDonors(),
+
+        loadScreening(),
+
+        loadInventory(),
+
+        loadRequests(),
+
+        loadNotifications()
+
+    ]);
+
+}
+
+
+/* =====================================================
+   SAFE HTML DISPLAY
+===================================================== */
+
+function escapeHTML(value) {
+
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =====================================================
+   DATE FORMAT
+===================================================== */
+
+function formatDate(value) {
+
+    if (!value) {
+        return "";
+    }
+
+    return String(value).split("T")[0];
+}
+
+
+/* =====================================================
+   SET DEFAULT PREDICTION DATE
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        const dateInput =
+            document.getElementById(
+                "predictionDate"
+            );
+
+        if (dateInput) {
+
+            const today =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+
+            dateInput.value = today;
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
